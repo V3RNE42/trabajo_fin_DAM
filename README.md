@@ -15,8 +15,18 @@ Para esto tiene en cuenta una serie de parámetros espacio-temporales que maneja
 3-Se asume que no hay alteraciones de altitud sobre el nivel del mar, ni túneles, tiempo nublado,o sombra proyectada por edificaciones y/o accidentes geográficos de ningún tipo.   
 4-Se asume que trabajamos desde el **uso horario del punto de salida**, que será el reloj de referencia del viajero. Los cambios horarios derivados del movimiento entre husos horarios se verán reflejados en los resultados finales.    
 
-**ALGORITMO FUNDAMENTAL:**
-
+**ALGORITMO FUNDAMENTAL:**  
++-----------+---------+    
+| Izquierda | Derecha |    
++-----------+---------+------------------------+-------------+   
+| SOL_____  | SOMBRA  | Antes Mediodia Solar   | Norte a Sur   |   
++-----------+---------+------------------------+-------------+   
+| SOMBRA  | SOL_____  | Antes Mediodia Solar   | Sur a Norte   |    
++-----------+---------+------------------------+-------------+   
+| SOL_____  | SOMBRA  | Tras el Mediodia Solar | Sur a Norte   |    
++-----------+---------+------------------------+-------------+   
+| SOMBRA  | SOL_____  | Tras el Mediodia Solar | Norte a Sur   |    
++-----------+---------+------------------------+-------------+   
 
 **CRÉDITOS ADICIONALES:**   
 + Es necesario acreditar a Volodymir Agrafonkin, creador del módulo SunCalc de JS, útil para averiguar el itinerario solar para unas coordenadas espaciotemporales dadas. Sin su trabajo, nada de esto sería posible.
