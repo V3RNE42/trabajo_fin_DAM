@@ -29,6 +29,6 @@ Para esto tiene en cuenta una serie de parámetros espacio-temporales que maneja
 +-----------+---------+------------------------+-------------+   
 
 **CRÉDITOS ADICIONALES:**   
-+ Es necesario acreditar a Volodymir Agrafonkin, creador del módulo SunCalc de JS, útil para averiguar el itinerario solar para unas coordenadas espaciotemporales dadas. Sin su trabajo, nada de esto sería posible.
++ Es necesario acreditar a Volodymyr Agafonkin, creador del módulo SunCalc de JS, útil para averiguar el itinerario solar para unas coordenadas espaciotemporales dadas. Sin su trabajo, nada de esto sería posible.
 + He usado la API de OpenStreetMaps para hallar las coordenadas de los lugares de origen y destino
 + Es necesario acreditar también a Félix Gnass y Theodore Brown, creadores de https://spin.js.org/ , página que me ha resultado útil para dotar a la app de un spinner, muy útil para los tiempos de espera.
