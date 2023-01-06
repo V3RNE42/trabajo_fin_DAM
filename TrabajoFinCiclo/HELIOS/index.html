@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="./img/icons8-sun-color-32.png" />
+    <script type="module" src="./index_def.js"></script>
+    <title>☀️ HELIOS ☀️</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <h1 class="end">☀️ HELIOS ☀️</h1>
+        </header>
+        <main>
+            <form id="formulario">
+                <div class="end">
+                    Vamos a averiguar en qué lado debes sentarte en el vehículo,
+                    según quieras que te de el sol o la sombra.
+                </div>
+                <div>
+                    <label for="sun">Preferencia: </label>
+                    <select id="sun">
+                        <option name="sun" value=false>Sombra</option>
+                        <option name="sun" value=true>Sol</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="cambio">¿Puedes cambiar de asiento una vez comenzado el viaje?: </label>
+                    <select id="cambio">
+                        <option name="cambio" value=false>No</option>
+                        <option name="cambio" value=true>Sí</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="flight">¿Tu medio de transporte es aéreo?: </label>
+                    <select id="vuelo">
+                        <option name="flight" value=false>No</option>
+                        <option name="flight" value=true>Sí</option>
+                    </select>
+                </div>
+                <div class="time">
+                    <div class="end">
+                        <div>
+                            <label for="diasalida">Fecha de salida</label>
+                            <input id="diasalida" type="date" name="diasalida">
+                        </div>
+                        <div>
+                            <label>Hora de salida</label>
+                            <input class="hora" id="horasalida"   type="number" name="horaSalida">
+                            <label>: </label>
+                            <input class="hora" id="minutosalida" type="number" name="minutoSalida">
+                        </div>
+                    </div>
+                    <div class="end">
+                        <div>
+                            <label for="diallegada">Fecha de llegada</label>
+                            <input id="diallegada" type="date" name="diallegada">
+                        </div>
+                        <div>
+                            <label>Hora de llegada</label>
+                            <input class="hora" id="horallegada"    type="number" name="horaLlegada">
+                            <label>: </label>
+                            <input class="hora" id="minutollegada"  type="number" name="minutoLlegada">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="origen">¿De qué localidad sales?</label>
+                    <input id="origen"  type="text" name="origen">
+                    <label for="destino">¿A qué localidad vas? </label>
+                    <input id="destino" type="text" name="destino">
+                </div>
+                <div class="preferencia">
+                    <button id="submit" type="submit">Enviar    </button>
+                    <button id="reset"               >Borrar    </button>
+                    <button id="result"              >Resultados</button>
+                </div>
+            </form>
+            <div id="render"></div>
+        </main>
+        <footer class="end">
+            <a href="https://github.com/V3RNE42">Github de Julio</a>
+        </footer>
+    </div>
+</body>
+
+</html>
