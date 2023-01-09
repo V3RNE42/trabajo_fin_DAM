@@ -359,7 +359,7 @@ async function sectionFormatter() {
                     event: eventos[j],
                     date: propiedades[j][eventos[j]],
                     coords: getNewCoords(datos["start"], datos["end"], (j>0?1:0)),
-                    offset: await getOffset(j>0?datos["start"]:datos["end"]),
+                    offset: await getOffset(j>0?datos["end"]:datos["start"]),
                     rate: j > 0 ? 1 : 0,
                 };
             };
