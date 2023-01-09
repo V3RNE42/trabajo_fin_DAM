@@ -37,10 +37,11 @@
                     </select>
                 </div>
                 <div>
-                    <label for="flight">¿Tu medio de transporte es aéreo?: </label>
-                    <select id="vuelo">
-                        <option name="flight" value=false>No</option>
-                        <option name="flight" value=true>Sí</option>
+                    <label for="reloj">¿Quieres los resultados en hora local?: </label> 
+                    <p>(Se entiende que tu reloj se ajusta automáticamente)</p> <br> 
+                    <select id="local">
+                        <option name="reloj" value=false>No</option>
+                        <option name="reloj" value=true>Sí</option>
                     </select>
                 </div>
                 <div class="time">
@@ -72,8 +73,501 @@
                 <div>
                     <label for="origen">¿De qué localidad sales?</label>
                     <input id="origen"  type="text" name="origen">
+               <label for="paisOrigen">¿De qué pais sales?</label>
+                    <select id="paisOrigen">
+                        <option name="paisOrigen" value="Afghanistan">Afghanistan</option>
+                        <option name="paisOrigen" value="Albania">Albania</option>
+                        <option name="paisOrigen" value="Algeria">Algeria</option>
+                        <option name="paisOrigen" value="American Samoa">American Samoa</option>
+                        <option name="paisOrigen" value="Andorra">Andorra</option>
+                        <option name="paisOrigen" value="Angola">Angola</option>
+                        <option name="paisOrigen" value="Anguilla">Anguilla</option>
+                        <option name="paisOrigen" value="Antarctica">Antarctica</option>
+                        <option name="paisOrigen" value="Antigua and Barbuda">Antigua and Barbuda</option>
+                        <option name="paisOrigen" value="Argentina">Argentina</option>
+                        <option name="paisOrigen" value="Armenia">Armenia</option>
+                        <option name="paisOrigen" value="Aruba">Aruba</option>
+                        <option name="paisOrigen" value="Australia">Australia</option>
+                        <option name="paisOrigen" value="Austria">Austria</option>
+                        <option name="paisOrigen" value="Azerbaijan">Azerbaijan</option>
+                        <option name="paisOrigen" value="Bahrain">Bahrain</option>
+                        <option name="paisOrigen" value="Bangladesh">Bangladesh</option>
+                        <option name="paisOrigen" value="Barbados">Barbados</option>
+                        <option name="paisOrigen" value="Belarus">Belarus</option>
+                        <option name="paisOrigen" value="Belgium">Belgium</option>
+                        <option name="paisOrigen" value="Belize">Belize</option>
+                        <option name="paisOrigen" value="Benin">Benin</option>
+                        <option name="paisOrigen" value="Bermuda">Bermuda</option>
+                        <option name="paisOrigen" value="Bhutan">Bhutan</option>
+                        <option name="paisOrigen" value="Bolivia">Bolivia</option>
+                        <option name="paisOrigen" value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                        <option name="paisOrigen" value="Botswana">Botswana</option>
+                        <option name="paisOrigen" value="Bouvet Island">Bouvet Island</option>
+                        <option name="paisOrigen" value="Brazil">Brazil</option>
+                        <option name="paisOrigen" value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                        <option name="paisOrigen" value="British Virgin Islands">British Virgin Islands</option>
+                        <option name="paisOrigen" value="Brunei">Brunei</option>
+                        <option name="paisOrigen" value="Bulgaria">Bulgaria</option>
+                        <option name="paisOrigen" value="Burkina Faso">Burkina Faso</option>
+                        <option name="paisOrigen" value="Burundi">Burundi</option>
+                        <option name="paisOrigen" value="Cambodia">Cambodia</option>
+                        <option name="paisOrigen" value="Cameroon">Cameroon</option>
+                        <option name="paisOrigen" value="Canada">Canada</option>
+                        <option name="paisOrigen" value="Cape Verde">Cape Verde</option>
+                        <option name="paisOrigen" value="Cayman Islands">Cayman Islands</option>
+                        <option name="paisOrigen" value="Central African Republic">Central African Republic</option>
+                        <option name="paisOrigen" value="Chad">Chad</option>
+                        <option name="paisOrigen" value="Chile">Chile</option>
+                        <option name="paisOrigen" value="China">China</option>
+                        <option name="paisOrigen" value="Christmas Island">Christmas Island</option>
+                        <option name="paisOrigen" value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                        <option name="paisOrigen" value="Colombia">Colombia</option>
+                        <option name="paisOrigen" value="Comoros">Comoros</option>
+                        <option name="paisOrigen" value="Congo">Congo</option>
+                        <option name="paisOrigen" value="Cook Islands">Cook Islands</option>
+                        <option name="paisOrigen" value="Costa Rica">Costa Rica</option>
+                        <option name="paisOrigen" value="Cote d\'Ivoire">Cote d\'Ivoire</option>
+                        <option name="paisOrigen" value="Croatia">Croatia</option>
+                        <option name="paisOrigen" value="Cuba">Cuba</option>
+                        <option name="paisOrigen" value="Cyprus">Cyprus</option>
+                        <option name="paisOrigen" value="Czech Republic">Czech Republic</option>
+                        <option name="paisOrigen" value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+                        <option name="paisOrigen" value="Denmark">Denmark</option>
+                        <option name="paisOrigen" value="Djibouti">Djibouti</option>
+                        <option name="paisOrigen" value="Dominica">Dominica</option>
+                        <option name="paisOrigen" value="Dominican Republic">Dominican Republic</option>
+                        <option name="paisOrigen" value="East Timor">East Timor</option>
+                        <option name="paisOrigen" value="Ecuador">Ecuador</option>
+                        <option name="paisOrigen" value="Egypt">Egypt</option>
+                        <option name="paisOrigen" value="El Salvador">El Salvador</option>
+                        <option name="paisOrigen" value="Equatorial Guinea">Equatorial Guinea</option>
+                        <option name="paisOrigen" value="Eritrea">Eritrea</option>
+                        <option name="paisOrigen" value="Estonia">Estonia</option>
+                        <option name="paisOrigen" value="Ethiopia">Ethiopia</option>
+                        <option name="paisOrigen" value="Faeroe Islands">Faeroe Islands</option>
+                        <option name="paisOrigen" value="Falkland Islands">Falkland Islands</option>
+                        <option name="paisOrigen" value="Fiji">Fiji</option>
+                        <option name="paisOrigen" value="Finland">Finland</option>
+                        <option name="paisOrigen" value="Former Yugoslav Republic of Macedonia">Former Yugoslav Republic of Macedonia
+                        </option>
+                        <option name="paisOrigen" value="France">France</option>
+                        <option name="paisOrigen" value="French Guiana">French Guiana</option>
+                        <option name="paisOrigen" value="French Polynesia">French Polynesia</option>
+                        <option name="paisOrigen" value="French Southern Territories">French Southern Territories</option>
+                        <option name="paisOrigen" value="Gabon">Gabon</option>
+                        <option name="paisOrigen" value="Georgia">Georgia</option>
+                        <option name="paisOrigen" value="Germany">Germany</option>
+                        <option name="paisOrigen" value="Ghana">Ghana</option>
+                        <option name="paisOrigen" value="Gibraltar">Gibraltar</option>
+                        <option name="paisOrigen" value="Greece">Greece</option>
+                        <option name="paisOrigen" value="Greenland">Greenland</option>
+                        <option name="paisOrigen" value="Grenada">Grenada</option>
+                        <option name="paisOrigen" value="Guadeloupe">Guadeloupe</option>
+                        <option name="paisOrigen" value="Guam">Guam</option>
+                        <option name="paisOrigen" value="Guatemala">Guatemala</option>
+                        <option name="paisOrigen" value="Guinea">Guinea</option>
+                        <option name="paisOrigen" value="Guinea-Bissau">Guinea-Bissau</option>
+                        <option name="paisOrigen" value="Guyana">Guyana</option>
+                        <option name="paisOrigen" value="Haiti">Haiti</option>
+                        <option name="paisOrigen" value="Heard Island and McDonald Islands">Heard Island and McDonald Islands</option>
+                        <option name="paisOrigen" value="Honduras">Honduras</option>
+                        <option name="paisOrigen" value="Hong Kong">Hong Kong</option>
+                        <option name="paisOrigen" value="Hungary">Hungary</option>
+                        <option name="paisOrigen" value="Iceland">Iceland</option>
+                        <option name="paisOrigen" value="India">India</option>
+                        <option name="paisOrigen" value="Indonesia">Indonesia</option>
+                        <option name="paisOrigen" value="Iran">Iran</option>
+                        <option name="paisOrigen" value="Iraq">Iraq</option>
+                        <option name="paisOrigen" value="Ireland">Ireland</option>
+                        <option name="paisOrigen" value="Israel">Israel</option>
+                        <option name="paisOrigen" value="Italy">Italy</option>
+                        <option name="paisOrigen" value="Jamaica">Jamaica</option>
+                        <option name="paisOrigen" value="Japan">Japan</option>
+                        <option name="paisOrigen" value="Jordan">Jordan</option>
+                        <option name="paisOrigen" value="Kazakhstan">Kazakhstan</option>
+                        <option name="paisOrigen" value="Kenya">Kenya</option>
+                        <option name="paisOrigen" value="Kiribati">Kiribati</option>
+                        <option name="paisOrigen" value="Kuwait">Kuwait</option>
+                        <option name="paisOrigen" value="Kyrgyzstan">Kyrgyzstan</option>
+                        <option name="paisOrigen" value="Laos">Laos</option>
+                        <option name="paisOrigen" value="Latvia">Latvia</option>
+                        <option name="paisOrigen" value="Lebanon">Lebanon</option>
+                        <option name="paisOrigen" value="Lesotho">Lesotho</option>
+                        <option name="paisOrigen" value="Liberia">Liberia</option>
+                        <option name="paisOrigen" value="Libya">Libya</option>
+                        <option name="paisOrigen" value="Liechtenstein">Liechtenstein</option>
+                        <option name="paisOrigen" value="Lithuania">Lithuania</option>
+                        <option name="paisOrigen" value="Luxembourg">Luxembourg</option>
+                        <option name="paisOrigen" value="Macau">Macau</option>
+                        <option name="paisOrigen" value="Madagascar">Madagascar</option>
+                        <option name="paisOrigen" value="Malawi">Malawi</option>
+                        <option name="paisOrigen" value="Malaysia">Malaysia</option>
+                        <option name="paisOrigen" value="Maldives">Maldives</option>
+                        <option name="paisOrigen" value="Mali">Mali</option>
+                        <option name="paisOrigen" value="Malta">Malta</option>
+                        <option name="paisOrigen" value="Marshall Islands">Marshall Islands</option>
+                        <option name="paisOrigen" value="Martinique">Martinique</option>
+                        <option name="paisOrigen" value="Mauritania">Mauritania</option>
+                        <option name="paisOrigen" value="Mauritius">Mauritius</option>
+                        <option name="paisOrigen" value="Mayotte">Mayotte</option>
+                        <option name="paisOrigen" value="Mexico">Mexico</option>
+                        <option name="paisOrigen" value="Micronesia">Micronesia</option>
+                        <option name="paisOrigen" value="Moldova">Moldova</option>
+                        <option name="paisOrigen" value="Monaco">Monaco</option>
+                        <option name="paisOrigen" value="Mongolia">Mongolia</option>
+                        <option name="paisOrigen" value="Montenegro">Montenegro</option>
+                        <option name="paisOrigen" value="Montserrat">Montserrat</option>
+                        <option name="paisOrigen" value="Morocco">Morocco</option>
+                        <option name="paisOrigen" value="Mozambique">Mozambique</option>
+                        <option name="paisOrigen" value="Myanmar">Myanmar</option>
+                        <option name="paisOrigen" value="Namibia">Namibia</option>
+                        <option name="paisOrigen" value="Nauru">Nauru</option>
+                        <option name="paisOrigen" value="Nepal">Nepal</option>
+                        <option name="paisOrigen" value="Netherlands">Netherlands</option>
+                        <option name="paisOrigen" value="Netherlands Antilles">Netherlands Antilles</option>
+                        <option name="paisOrigen" value="New Caledonia">New Caledonia</option>
+                        <option name="paisOrigen" value="New Zealand">New Zealand</option>
+                        <option name="paisOrigen" value="Nicaragua">Nicaragua</option>
+                        <option name="paisOrigen" value="Niger">Niger</option>
+                        <option name="paisOrigen" value="Nigeria">Nigeria</option>
+                        <option name="paisOrigen" value="Niue">Niue</option>
+                        <option name="paisOrigen" value="Norfolk Island">Norfolk Island</option>
+                        <option name="paisOrigen" value="North Korea">North Korea</option>
+                        <option name="paisOrigen" value="Northern Marianas">Northern Marianas</option>
+                        <option name="paisOrigen" value="Norway">Norway</option>
+                        <option name="paisOrigen" value="Oman">Oman</option>
+                        <option name="paisOrigen" value="Pakistan">Pakistan</option>
+                        <option name="paisOrigen" value="Palau">Palau</option>
+                        <option name="paisOrigen" value="Panama">Panama</option>
+                        <option name="paisOrigen" value="Papua New Guinea">Papua New Guinea</option>
+                        <option name="paisOrigen" value="Paraguay">Paraguay</option>
+                        <option name="paisOrigen" value="Peru">Peru</option>
+                        <option name="paisOrigen" value="Philippines">Philippines</option>
+                        <option name="paisOrigen" value="Pitcairn Islands">Pitcairn Islands</option>
+                        <option name="paisOrigen" value="Poland">Poland</option>
+                        <option name="paisOrigen" value="Portugal">Portugal</option>
+                        <option name="paisOrigen" value="Puerto Rico">Puerto Rico</option>
+                        <option name="paisOrigen" value="Qatar">Qatar</option>
+                        <option name="paisOrigen" value="Reunion">Reunion</option>
+                        <option name="paisOrigen" value="Romania">Romania</option>
+                        <option name="paisOrigen" value="Russia">Russia</option>
+                        <option name="paisOrigen" value="Rwanda">Rwanda</option>
+                        <option name="paisOrigen" value="Sqo Tome and Principe">Sqo Tome and Principe</option>
+                        <option name="paisOrigen" value="Saint Helena">Saint Helena</option>
+                        <option name="paisOrigen" value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                        <option name="paisOrigen" value="Saint Lucia">Saint Lucia</option>
+                        <option name="paisOrigen" value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+                        <option name="paisOrigen" value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+                        <option name="paisOrigen" value="Samoa">Samoa</option>
+                        <option name="paisOrigen" value="San Marino">San Marino</option>
+                        <option name="paisOrigen" value="Saudi Arabia">Saudi Arabia</option>
+                        <option name="paisOrigen" value="Senegal">Senegal</option>
+                        <option name="paisOrigen" value="Serbia">Serbia</option>
+                        <option name="paisOrigen" value="Seychelles">Seychelles</option>
+                        <option name="paisOrigen" value="Sierra Leone">Sierra Leone</option>
+                        <option name="paisOrigen" value="Singapore">Singapore</option>
+                        <option name="paisOrigen" value="Slovakia">Slovakia</option>
+                        <option name="paisOrigen" value="Slovenia">Slovenia</option>
+                        <option name="paisOrigen" value="Solomon Islands">Solomon Islands</option>
+                        <option name="paisOrigen" value="Somalia">Somalia</option>
+                        <option name="paisOrigen" value="South Africa">South Africa</option>
+                        <option name="paisOrigen" value="South Georgia and the South Sandwich Islands">South Georgia and the South Sandwich
+                            Islands</option>
+                        <option name="paisOrigen" value="South Korea">South Korea</option>
+                        <option name="paisOrigen" value="South Sudan">South Sudan</option>
+                        <option name="paisOrigen" value="Spain">Spain</option>
+                        <option name="paisOrigen" value="Sri Lanka">Sri Lanka</option>
+                        <option name="paisOrigen" value="Sudan">Sudan</option>
+                        <option name="paisOrigen" value="Suriname">Suriname</option>
+                        <option name="paisOrigen" value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+                        <option name="paisOrigen" value="Swaziland">Swaziland</option>
+                        <option name="paisOrigen" value="Sweden">Sweden</option>
+                        <option name="paisOrigen" value="Switzerland">Switzerland</option>
+                        <option name="paisOrigen" value="Syria">Syria</option>
+                        <option name="paisOrigen" value="Taiwan">Taiwan</option>
+                        <option name="paisOrigen" value="Tajikistan">Tajikistan</option>
+                        <option name="paisOrigen" value="Tanzania">Tanzania</option>
+                        <option name="paisOrigen" value="Thailand">Thailand</option>
+                        <option name="paisOrigen" value="The Bahamas">The Bahamas</option>
+                        <option name="paisOrigen" value="The Gambia">The Gambia</option>
+                        <option name="paisOrigen" value="Togo">Togo</option>
+                        <option name="paisOrigen" value="Tokelau">Tokelau</option>
+                        <option name="paisOrigen" value="Tonga">Tonga</option>
+                        <option name="paisOrigen" value="Trinidad and Tobago">Trinidad and Tobago</option>
+                        <option name="paisOrigen" value="Tunisia">Tunisia</option>
+                        <option name="paisOrigen" value="Turkey">Turkey</option>
+                        <option name="paisOrigen" value="Turkmenistan">Turkmenistan</option>
+                        <option name="paisOrigen" value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                        <option name="paisOrigen" value="Tuvalu">Tuvalu</option>
+                        <option name="paisOrigen" value="Virgin Islands">Virgin Islands</option>
+                        <option name="paisOrigen" value="Uganda">Uganda</option>
+                        <option name="paisOrigen" value="Ukraine">Ukraine</option>
+                        <option name="paisOrigen" value="United Arab Emirates">United Arab Emirates</option>
+                        <option name="paisOrigen" value="United Kingdom">United Kingdom</option>
+                        <option name="paisOrigen" value="United States">United States</option>
+                        <option name="paisOrigen" value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+                        <option name="paisOrigen" value="Uruguay">Uruguay</option>
+                        <option name="paisOrigen" value="Uzbekistan">Uzbekistan</option>
+                        <option name="paisOrigen" value="Vanuatu">Vanuatu</option>
+                        <option name="paisOrigen" value="Vatican City">Vatican City</option>
+                        <option name="paisOrigen" value="Venezuela">Venezuela</option>
+                        <option name="paisOrigen" value="Vietnam">Vietnam</option>
+                        <option name="paisOrigen" value="Wallis and Futuna">Wallis and Futuna</option>
+                        <option name="paisOrigen" value="Western Sahara">Western Sahara</option>
+                        <option name="paisOrigen" value="Yemen">Yemen</option>
+                        <option name="paisOrigen" value="Yugoslavia">Yugoslavia</option>
+                        <option name="paisOrigen" value="Zambia">Zambia</option>
+                        <option name="paisOrigen" value="Zimbabwe">Zimbabwe</option>
+                    </select>
                     <label for="destino">¿A qué localidad vas? </label>
                     <input id="destino" type="text" name="destino">
+                    <label for="paisDestino">¿A qué pais vas? </label>
+                    <select id="paisDestino">
+                        <option name="paisDestino" value="Afghanistan">Afghanistan</option>
+                        <option name="paisDestino" value="Albania">Albania</option>
+                        <option name="paisDestino" value="Algeria">Algeria</option>
+                        <option name="paisDestino" value="American Samoa">American Samoa</option>
+                        <option name="paisDestino" value="Andorra">Andorra</option>
+                        <option name="paisDestino" value="Angola">Angola</option>
+                        <option name="paisDestino" value="Anguilla">Anguilla</option>
+                        <option name="paisDestino" value="Antarctica">Antarctica</option>
+                        <option name="paisDestino" value="Antigua and Barbuda">Antigua and Barbuda</option>
+                        <option name="paisDestino" value="Argentina">Argentina</option>
+                        <option name="paisDestino" value="Armenia">Armenia</option>
+                        <option name="paisDestino" value="Aruba">Aruba</option>
+                        <option name="paisDestino" value="Australia">Australia</option>
+                        <option name="paisDestino" value="Austria">Austria</option>
+                        <option name="paisDestino" value="Azerbaijan">Azerbaijan</option>
+                        <option name="paisDestino" value="Bahrain">Bahrain</option>
+                        <option name="paisDestino" value="Bangladesh">Bangladesh</option>
+                        <option name="paisDestino" value="Barbados">Barbados</option>
+                        <option name="paisDestino" value="Belarus">Belarus</option>
+                        <option name="paisDestino" value="Belgium">Belgium</option>
+                        <option name="paisDestino" value="Belize">Belize</option>
+                        <option name="paisDestino" value="Benin">Benin</option>
+                        <option name="paisDestino" value="Bermuda">Bermuda</option>
+                        <option name="paisDestino" value="Bhutan">Bhutan</option>
+                        <option name="paisDestino" value="Bolivia">Bolivia</option>
+                        <option name="paisDestino" value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                        <option name="paisDestino" value="Botswana">Botswana</option>
+                        <option name="paisDestino" value="Bouvet Island">Bouvet Island</option>
+                        <option name="paisDestino" value="Brazil">Brazil</option>
+                        <option name="paisDestino" value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                        <option name="paisDestino" value="British Virgin Islands">British Virgin Islands</option>
+                        <option name="paisDestino" value="Brunei">Brunei</option>
+                        <option name="paisDestino" value="Bulgaria">Bulgaria</option>
+                        <option name="paisDestino" value="Burkina Faso">Burkina Faso</option>
+                        <option name="paisDestino" value="Burundi">Burundi</option>
+                        <option name="paisDestino" value="Cambodia">Cambodia</option>
+                        <option name="paisDestino" value="Cameroon">Cameroon</option>
+                        <option name="paisDestino" value="Canada">Canada</option>
+                        <option name="paisDestino" value="Cape Verde">Cape Verde</option>
+                        <option name="paisDestino" value="Cayman Islands">Cayman Islands</option>
+                        <option name="paisDestino" value="Central African Republic">Central African Republic</option>
+                        <option name="paisDestino" value="Chad">Chad</option>
+                        <option name="paisDestino" value="Chile">Chile</option>
+                        <option name="paisDestino" value="China">China</option>
+                        <option name="paisDestino" value="Christmas Island">Christmas Island</option>
+                        <option name="paisDestino" value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                        <option name="paisDestino" value="Colombia">Colombia</option>
+                        <option name="paisDestino" value="Comoros">Comoros</option>
+                        <option name="paisDestino" value="Congo">Congo</option>
+                        <option name="paisDestino" value="Cook Islands">Cook Islands</option>
+                        <option name="paisDestino" value="Costa Rica">Costa Rica</option>
+                        <option name="paisDestino" value="Cote d\'Ivoire">Cote d\'Ivoire</option>
+                        <option name="paisDestino" value="Croatia">Croatia</option>
+                        <option name="paisDestino" value="Cuba">Cuba</option>
+                        <option name="paisDestino" value="Cyprus">Cyprus</option>
+                        <option name="paisDestino" value="Czech Republic">Czech Republic</option>
+                        <option name="paisDestino" value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+                        <option name="paisDestino" value="Denmark">Denmark</option>
+                        <option name="paisDestino" value="Djibouti">Djibouti</option>
+                        <option name="paisDestino" value="Dominica">Dominica</option>
+                        <option name="paisDestino" value="Dominican Republic">Dominican Republic</option>
+                        <option name="paisDestino" value="East Timor">East Timor</option>
+                        <option name="paisDestino" value="Ecuador">Ecuador</option>
+                        <option name="paisDestino" value="Egypt">Egypt</option>
+                        <option name="paisDestino" value="El Salvador">El Salvador</option>
+                        <option name="paisDestino" value="Equatorial Guinea">Equatorial Guinea</option>
+                        <option name="paisDestino" value="Eritrea">Eritrea</option>
+                        <option name="paisDestino" value="Estonia">Estonia</option>
+                        <option name="paisDestino" value="Ethiopia">Ethiopia</option>
+                        <option name="paisDestino" value="Faeroe Islands">Faeroe Islands</option>
+                        <option name="paisDestino" value="Falkland Islands">Falkland Islands</option>
+                        <option name="paisDestino" value="Fiji">Fiji</option>
+                        <option name="paisDestino" value="Finland">Finland</option>
+                        <option name="paisDestino" value="Former Yugoslav Republic of Macedonia">Former Yugoslav Republic of Macedonia
+                        </option>
+                        <option name="paisDestino" value="France">France</option>
+                        <option name="paisDestino" value="French Guiana">French Guiana</option>
+                        <option name="paisDestino" value="French Polynesia">French Polynesia</option>
+                        <option name="paisDestino" value="French Southern Territories">French Southern Territories</option>
+                        <option name="paisDestino" value="Gabon">Gabon</option>
+                        <option name="paisDestino" value="Georgia">Georgia</option>
+                        <option name="paisDestino" value="Germany">Germany</option>
+                        <option name="paisDestino" value="Ghana">Ghana</option>
+                        <option name="paisDestino" value="Gibraltar">Gibraltar</option>
+                        <option name="paisDestino" value="Greece">Greece</option>
+                        <option name="paisDestino" value="Greenland">Greenland</option>
+                        <option name="paisDestino" value="Grenada">Grenada</option>
+                        <option name="paisDestino" value="Guadeloupe">Guadeloupe</option>
+                        <option name="paisDestino" value="Guam">Guam</option>
+                        <option name="paisDestino" value="Guatemala">Guatemala</option>
+                        <option name="paisDestino" value="Guinea">Guinea</option>
+                        <option name="paisDestino" value="Guinea-Bissau">Guinea-Bissau</option>
+                        <option name="paisDestino" value="Guyana">Guyana</option>
+                        <option name="paisDestino" value="Haiti">Haiti</option>
+                        <option name="paisDestino" value="Heard Island and McDonald Islands">Heard Island and McDonald Islands</option>
+                        <option name="paisDestino" value="Honduras">Honduras</option>
+                        <option name="paisDestino" value="Hong Kong">Hong Kong</option>
+                        <option name="paisDestino" value="Hungary">Hungary</option>
+                        <option name="paisDestino" value="Iceland">Iceland</option>
+                        <option name="paisDestino" value="India">India</option>
+                        <option name="paisDestino" value="Indonesia">Indonesia</option>
+                        <option name="paisDestino" value="Iran">Iran</option>
+                        <option name="paisDestino" value="Iraq">Iraq</option>
+                        <option name="paisDestino" value="Ireland">Ireland</option>
+                        <option name="paisDestino" value="Israel">Israel</option>
+                        <option name="paisDestino" value="Italy">Italy</option>
+                        <option name="paisDestino" value="Jamaica">Jamaica</option>
+                        <option name="paisDestino" value="Japan">Japan</option>
+                        <option name="paisDestino" value="Jordan">Jordan</option>
+                        <option name="paisDestino" value="Kazakhstan">Kazakhstan</option>
+                        <option name="paisDestino" value="Kenya">Kenya</option>
+                        <option name="paisDestino" value="Kiribati">Kiribati</option>
+                        <option name="paisDestino" value="Kuwait">Kuwait</option>
+                        <option name="paisDestino" value="Kyrgyzstan">Kyrgyzstan</option>
+                        <option name="paisDestino" value="Laos">Laos</option>
+                        <option name="paisDestino" value="Latvia">Latvia</option>
+                        <option name="paisDestino" value="Lebanon">Lebanon</option>
+                        <option name="paisDestino" value="Lesotho">Lesotho</option>
+                        <option name="paisDestino" value="Liberia">Liberia</option>
+                        <option name="paisDestino" value="Libya">Libya</option>
+                        <option name="paisDestino" value="Liechtenstein">Liechtenstein</option>
+                        <option name="paisDestino" value="Lithuania">Lithuania</option>
+                        <option name="paisDestino" value="Luxembourg">Luxembourg</option>
+                        <option name="paisDestino" value="Macau">Macau</option>
+                        <option name="paisDestino" value="Madagascar">Madagascar</option>
+                        <option name="paisDestino" value="Malawi">Malawi</option>
+                        <option name="paisDestino" value="Malaysia">Malaysia</option>
+                        <option name="paisDestino" value="Maldives">Maldives</option>
+                        <option name="paisDestino" value="Mali">Mali</option>
+                        <option name="paisDestino" value="Malta">Malta</option>
+                        <option name="paisDestino" value="Marshall Islands">Marshall Islands</option>
+                        <option name="paisDestino" value="Martinique">Martinique</option>
+                        <option name="paisDestino" value="Mauritania">Mauritania</option>
+                        <option name="paisDestino" value="Mauritius">Mauritius</option>
+                        <option name="paisDestino" value="Mayotte">Mayotte</option>
+                        <option name="paisDestino" value="Mexico">Mexico</option>
+                        <option name="paisDestino" value="Micronesia">Micronesia</option>
+                        <option name="paisDestino" value="Moldova">Moldova</option>
+                        <option name="paisDestino" value="Monaco">Monaco</option>
+                        <option name="paisDestino" value="Mongolia">Mongolia</option>
+                        <option name="paisDestino" value="Montenegro">Montenegro</option>
+                        <option name="paisDestino" value="Montserrat">Montserrat</option>
+                        <option name="paisDestino" value="Morocco">Morocco</option>
+                        <option name="paisDestino" value="Mozambique">Mozambique</option>
+                        <option name="paisDestino" value="Myanmar">Myanmar</option>
+                        <option name="paisDestino" value="Namibia">Namibia</option>
+                        <option name="paisDestino" value="Nauru">Nauru</option>
+                        <option name="paisDestino" value="Nepal">Nepal</option>
+                        <option name="paisDestino" value="Netherlands">Netherlands</option>
+                        <option name="paisDestino" value="Netherlands Antilles">Netherlands Antilles</option>
+                        <option name="paisDestino" value="New Caledonia">New Caledonia</option>
+                        <option name="paisDestino" value="New Zealand">New Zealand</option>
+                        <option name="paisDestino" value="Nicaragua">Nicaragua</option>
+                        <option name="paisDestino" value="Niger">Niger</option>
+                        <option name="paisDestino" value="Nigeria">Nigeria</option>
+                        <option name="paisDestino" value="Niue">Niue</option>
+                        <option name="paisDestino" value="Norfolk Island">Norfolk Island</option>
+                        <option name="paisDestino" value="North Korea">North Korea</option>
+                        <option name="paisDestino" value="Northern Marianas">Northern Marianas</option>
+                        <option name="paisDestino" value="Norway">Norway</option>
+                        <option name="paisDestino" value="Oman">Oman</option>
+                        <option name="paisDestino" value="Pakistan">Pakistan</option>
+                        <option name="paisDestino" value="Palau">Palau</option>
+                        <option name="paisDestino" value="Panama">Panama</option>
+                        <option name="paisDestino" value="Papua New Guinea">Papua New Guinea</option>
+                        <option name="paisDestino" value="Paraguay">Paraguay</option>
+                        <option name="paisDestino" value="Peru">Peru</option>
+                        <option name="paisDestino" value="Philippines">Philippines</option>
+                        <option name="paisDestino" value="Pitcairn Islands">Pitcairn Islands</option>
+                        <option name="paisDestino" value="Poland">Poland</option>
+                        <option name="paisDestino" value="Portugal">Portugal</option>
+                        <option name="paisDestino" value="Puerto Rico">Puerto Rico</option>
+                        <option name="paisDestino" value="Qatar">Qatar</option>
+                        <option name="paisDestino" value="Reunion">Reunion</option>
+                        <option name="paisDestino" value="Romania">Romania</option>
+                        <option name="paisDestino" value="Russia">Russia</option>
+                        <option name="paisDestino" value="Rwanda">Rwanda</option>
+                        <option name="paisDestino" value="Sqo Tome and Principe">Sqo Tome and Principe</option>
+                        <option name="paisDestino" value="Saint Helena">Saint Helena</option>
+                        <option name="paisDestino" value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                        <option name="paisDestino" value="Saint Lucia">Saint Lucia</option>
+                        <option name="paisDestino" value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+                        <option name="paisDestino" value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+                        <option name="paisDestino" value="Samoa">Samoa</option>
+                        <option name="paisDestino" value="San Marino">San Marino</option>
+                        <option name="paisDestino" value="Saudi Arabia">Saudi Arabia</option>
+                        <option name="paisDestino" value="Senegal">Senegal</option>
+                        <option name="paisDestino" value="Serbia">Serbia</option>
+                        <option name="paisDestino" value="Seychelles">Seychelles</option>
+                        <option name="paisDestino" value="Sierra Leone">Sierra Leone</option>
+                        <option name="paisDestino" value="Singapore">Singapore</option>
+                        <option name="paisDestino" value="Slovakia">Slovakia</option>
+                        <option name="paisDestino" value="Slovenia">Slovenia</option>
+                        <option name="paisDestino" value="Solomon Islands">Solomon Islands</option>
+                        <option name="paisDestino" value="Somalia">Somalia</option>
+                        <option name="paisDestino" value="South Africa">South Africa</option>
+                        <option name="paisDestino" value="South Georgia and the South Sandwich Islands">South Georgia and the South Sandwich
+                            Islands</option>
+                        <option name="paisDestino" value="South Korea">South Korea</option>
+                        <option name="paisDestino" value="South Sudan">South Sudan</option>
+                        <option name="paisDestino" value="Spain">Spain</option>
+                        <option name="paisDestino" value="Sri Lanka">Sri Lanka</option>
+                        <option name="paisDestino" value="Sudan">Sudan</option>
+                        <option name="paisDestino" value="Suriname">Suriname</option>
+                        <option name="paisDestino" value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+                        <option name="paisDestino" value="Swaziland">Swaziland</option>
+                        <option name="paisDestino" value="Sweden">Sweden</option>
+                        <option name="paisDestino" value="Switzerland">Switzerland</option>
+                        <option name="paisDestino" value="Syria">Syria</option>
+                        <option name="paisDestino" value="Taiwan">Taiwan</option>
+                        <option name="paisDestino" value="Tajikistan">Tajikistan</option>
+                        <option name="paisDestino" value="Tanzania">Tanzania</option>
+                        <option name="paisDestino" value="Thailand">Thailand</option>
+                        <option name="paisDestino" value="The Bahamas">The Bahamas</option>
+                        <option name="paisDestino" value="The Gambia">The Gambia</option>
+                        <option name="paisDestino" value="Togo">Togo</option>
+                        <option name="paisDestino" value="Tokelau">Tokelau</option>
+                        <option name="paisDestino" value="Tonga">Tonga</option>
+                        <option name="paisDestino" value="Trinidad and Tobago">Trinidad and Tobago</option>
+                        <option name="paisDestino" value="Tunisia">Tunisia</option>
+                        <option name="paisDestino" value="Turkey">Turkey</option>
+                        <option name="paisDestino" value="Turkmenistan">Turkmenistan</option>
+                        <option name="paisDestino" value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                        <option name="paisDestino" value="Tuvalu">Tuvalu</option>
+                        <option name="paisDestino" value="Virgin Islands">Virgin Islands</option>
+                        <option name="paisDestino" value="Uganda">Uganda</option>
+                        <option name="paisDestino" value="Ukraine">Ukraine</option>
+                        <option name="paisDestino" value="United Arab Emirates">United Arab Emirates</option>
+                        <option name="paisDestino" value="United Kingdom">United Kingdom</option>
+                        <option name="paisDestino" value="United States">United States</option>
+                        <option name="paisDestino" value="United States Minor Outlying Islands">United States Minor Outlying Islands
+                        </option>
+                        <option name="paisDestino" value="Uruguay">Uruguay</option>
+                        <option name="paisDestino" value="Uzbekistan">Uzbekistan</option>
+                        <option name="paisDestino" value="Vanuatu">Vanuatu</option>
+                        <option name="paisDestino" value="Vatican City">Vatican City</option>
+                        <option name="paisDestino" value="Venezuela">Venezuela</option>
+                        <option name="paisDestino" value="Vietnam">Vietnam</option>
+                        <option name="paisDestino" value="Wallis and Futuna">Wallis and Futuna</option>
+                        <option name="paisDestino" value="Western Sahara">Western Sahara</option>
+                        <option name="paisDestino" value="Yemen">Yemen</option>
+                        <option name="paisDestino" value="Yugoslavia">Yugoslavia</option>
+                        <option name="paisDestino" value="Zambia">Zambia</option>
+                        <option name="paisDestino" value="Zimbabwe">Zimbabwe</option>
+                    </select>
                 </div>
                 <div class="preferencia">
                     <button id="submit" type="submit">Enviar    </button>

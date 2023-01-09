@@ -6,6 +6,8 @@ import sunCalc from "./SunCalc_function.js";
 let {getDayInfo} = sunCalc();
 //importo algunas funciones trigonometricas y matematicas que he creado aparte
 import { getNewCoords, getAbsoluteDiff } from "./trigo.js";
+/* LO DEJAMOS EN CUARENTENA DE MOMENTO. BUSCAMOS PARA HACERLO EN API
+    import timespace from "../node_modules/@mapbox/timespace/index.js"; */
 import { Spinner } from "./spinner.js";
 let { preventDefault } = window.Event.prototype;
 
@@ -47,7 +49,7 @@ const specialData = ["start","end", "NaS"];
 /** Info relativa a horas y minutos   */
 const horas = ["horasalida","minutosalida","horallegada","minutollegada"];
 /** Info recogida en el formulario servido en la web */
-const form  = ["cambio","sun",...horas,"origen","destino","diasalida", "diallegada", "vuelo",...specialData];
+const form  = ["cambio","sun",...horas,"origen","destino","diasalida", "diallegada", ...specialData, "local","paisOrigen", "paisDestino"];
 const ID    = [...form, "formulario", "submit", "reset", "resetea", "result", "render"];
 /** Array de subsecciones del tramo Principal entre las coordenadas iniciales y finales del array datos */
 let subSection = [{}];
@@ -66,12 +68,9 @@ window.addEventListener('load', ()=> {
                 if (isThereDaylightNow(here, now)) {
                     document.style.backgroundColor='white';
                 } else {
-                    document.style.backgroundColor='black';
-                };
+                    document.style.backgroundColor='black';};
             } else {
-                console.log(reject);
-            };
-        });
+                console.log(reject);};});
     } else {
         console.log("Tu navegador no permite geolocalizarte (^8");}
     main();});
@@ -92,7 +91,7 @@ function main() {
             Espinete.stop();
         };
     });
-    onClick(result, () => {
+    onClick(result, async () => {
         Espinete.spin(document.querySelector('form'));
         submit.disabled = true;
         if (datos.length>0) {
@@ -113,7 +112,6 @@ function main() {
 async function updateSubsections() {
         //limpio el array 'datos' de algunos elementos que ya no necesitamos
         horas.forEach((el) => delete datos[el.toString()]);
-    let vuelo         = datos.vuelo ? 11000 : 0;
     let salida        = new Date(datos.diasalida.getTime());
     let llegada       = new Date(datos.diallegada.getTime());
     let coordenadas   = {};
@@ -136,18 +134,18 @@ async function updateSubsections() {
     let tiempo1 = getDayInfo(salida, latitudOrigen, longitudOrigen);
     let tiempo2 = getDayInfo(llegada, latitudDestino, longitudDestino);
     //adquirimos el mediodia solar en origen 
-    let times = getTimes(salida, latitudDestino, longitudDestino, vuelo);
+    let times = getTimes(salida, latitudDestino, longitudDestino);
     datos.start = { lat: coordenadas.latOrig, lon: coordenadas.lonOrig, 
         sunset: tiempo1.sunset.end, sunrise: tiempo1.sunrise.start,
         solarnoon: times.solarNoon };
     //...y en destino
-    times = getTimes(llegada, latitudOrigen, longitudDestino, vuelo);
+    times = getTimes(llegada, latitudOrigen, longitudDestino);
     datos.end   = { lat: coordenadas.latDest, lon: coordenadas.lonDest,
         sunset: tiempo2.sunset.end, sunrise: tiempo2.sunrise.start,
         solarnoon: times.solarNoon };
     try {
-        updateSingleSections();
-        sectionFormatter();
+        await updateSingleSections();
+        await sectionFormatter();
         sectionAdapter();
         datos["secciones"] = subSection;
     } catch (error) {
@@ -155,31 +153,56 @@ async function updateSubsections() {
         console.log(error);};
 };
 
+/** Devuelve el huso horario de las coordenadas dadas */
+async function getOffset(coords) {
+    let endpoint = 'https://api.ipgeolocation.io/timezone',
+        APIkey = '7dad049d4d154390835146e2daa22d6f',
+        {lat, lon} = coords,
+        huso = 0;
+    let response = await fetch(`${endpoint}?apiKey=${APIkey}&lat=${lat}&long=${lon}`);
+    let data = await response.json();
+    huso = data.timezone_offset.valueOf();
+    return huso;
+};
+
+
 /** Function that renders the data in the screen */
 function renderResults() {
-    let {secciones, cambio, sun} = datos;
+    let {secciones, cambio, sun, local} = datos;
     let leftSeat;
     formulario.style.display = "none";
     let someInfo = document.createElement('div');
     someInfo.innerHTML =
                     `<b>Salida:</b>  ${datos["diasalida"]} <br>
                      <b>Llegada:</b> ${datos["diallegada"]} <br>
-                     <b>Origen:</b>  ${datos["origen"]} <br>
-                     <b>Destino:</b> ${datos["destino"]} <br>`;
+                     <b>Origen:</b>  ${datos["origen"]} , ${datos["paisOrigen"]}<br>
+                     <b>Destino:</b> ${datos["destino"]}, ${datos["paisDestino"]} <br>`;
     document.querySelector('header').appendChild(someInfo);
 
     secciones.forEach((el, i) => {
-        let hours2   = null!=el.sunset  ? el.sunset.getHours()    : el.noon?.getHours(), 
-        minutes2 = null!=el.sunset  ? el.sunset.getMinutes()  : el.noon?.getMinutes(),
-        noonHour = el.noon?.getHours(),
-        noonMin  = el.noon?.getMinutes(),
-        hours1   = null!=el.sunrise ? el.sunrise.getHours()   : el.noon?.getHours(), 
-        minutes1 = null!=el.sunrise ? el.sunrise.getMinutes() : el.noon?.getMinutes(),
-        day      = el.noon?.getDate().toString(),
-        month    = el.noon?.getMonth(),
-        year     = el.noon?.getFullYear();
-        let numbers = [hours2, minutes2, noonHour, noonMin, hours1, minutes1];
-        let stringifyNumbers =()=> numbers.forEach((el) => el= (el.toString().length==1) ? "0"+el : el);
+        let hours2, minutes2, noonHour, noonMin, hours1, minutes1, day, month, year;
+        /* Ajuste a los husos horarios locales */
+        if (!local) {
+            let originalOffset = secciones[0].sunriseOffset;
+            el.sunset  = (el.sunset !=null)? new Date(el.sunset.getTime()  + (el.sunsetOffset.valueOf()  - originalOffset) * ONE_HOUR) : null;
+            el.sunrise = (el.sunrise!=null)? new Date(el.sunrise.getTime() + (el.sunriseOffset.valueOf() - originalOffset) * ONE_HOUR) : null;
+            el.noon    = (el.noon   !=null)? new Date(el.noon.getTime()    + (el.noonOffset.valueOf()    - originalOffset) * ONE_HOUR) : null;
+        };
+
+            hours2   = null!=el.sunset  ? el.sunset.getHours()    : el.noon?.getHours(), 
+            minutes2 = null!=el.sunset  ? el.sunset.getMinutes()  : el.noon?.getMinutes(),
+            noonHour = el.noon?.getHours(),
+            noonMin  = el.noon?.getMinutes(),
+            hours1   = null!=el.sunrise ? el.sunrise.getHours()   : el.noon?.getHours(), 
+            minutes1 = null!=el.sunrise ? el.sunrise.getMinutes() : el.noon?.getMinutes(),
+            day      = el.noon?.getDate().toString(),
+            month    = el.noon?.getMonth(),
+            year     = el.noon?.getFullYear();
+
+        let hours = [hours2, noonHour, hours1];
+        let numbers = [...hours, minutes2, noonMin, minutes1];
+        function stringifyNumbers () {numbers.forEach((el) => el= (el<=9) ? "0"+el : ""+el);};
+        stringifyNumbers();
         let texto = ``;
         if (secciones.length>1) {   
             texto = `Dia ${day+"/"+(month+1)+"/"+year}: \n\t Tramo (${i+1}/${secciones.length}) - <br>`;};
@@ -189,41 +212,37 @@ function renderResults() {
         } else if (el["AM"]==null && el["noon"]!=null) {
             if (cambio) {
                 /* Es posible cambiar de asiento */
-                let same = !(hours1==noonHour && minutes1==noonMin);
-                if (same) {
-                    stringifyNumbers();
+                let sameTime = !(hours1==noonHour && minutes1==noonMin);
+                if (sameTime) {
                     texto +=     `Siéntate en el lado ${getLeftSeat(false)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
                     `a ${noonHour+":"+noonMin}, y luego`;};
-                stringifyNumbers();
-                texto += `\t  siéntate al lado ${getLeftSeat(true)?"izquierdo":"derecho"} del vehículo `;
-                texto += same
-                    ? `de ${noonHour+":"+noonMin} a ${hours2+":"+minutes2} ${sun?'☀️':'⛅'}`
-                    : `durante todo el trayecto  ${sun?'☀️':'⛅'}`;
+                texto += `\t  ${sameTime?'s':'S'}iéntate al lado ${getLeftSeat(true)?"izquierdo":"derecho"} del vehículo `;
+                texto += sameTime
+                    ? `de ${noonHour+":"+noonMin} a ${hours2+":"+minutes2} `
+                    : `durante todo el trayecto  `;
             } else {
                 /* No es posible cambiar de asiento */
                 if        (el["sunrise"]!=null) {
                     let morning   = el["noon"].getTime()   - el["sunrise"].getTime(),
                         afternoon = el["sunset"].getTime() - el["noon"].getTime();
                     leftSeat = getLeftSeat(morning>=afternoon);
-                    stringifyNumbers();
                     texto += `Siéntate en el lado ${!leftSeat?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
-                    `a ${hours2+":"+minutes2}  ${sun?'☀️':'⛅'}`;
+                    `a ${hours2+":"+minutes2}  `;
                 } else if (el["sunrise"]==null) {
-                    stringifyNumbers();
                     texto += `Siéntate en el lado ${getLeftSeat(false)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
-                    `a ${hours2+":"+minutes2}  ${sun?'☀️':'⛅'}`;
+                    `a ${hours2+":"+minutes2}  `;
                 } else if (el["sunset"]==null ) {
-                    stringifyNumbers();
                     texto += `Siéntate en el lado ${getLeftSeat(true)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
-                    `a ${hours2+":"+minutes2} ${sun?'☀️':'⛅'}`;
+                    `a ${hours2+":"+minutes2} `;
                 };
             };
         } else {
             /* No es necesario cambiarse: todo el trayecto courre ANTES o DESPUÉS del Mediodia Solar */
             leftSeat = getLeftSeat(el["AM"]);
-            stringifyNumbers();
-            texto += `Siéntate en el lado ${leftSeat?"izquierdo":"derecho"} del vehículo durante todo el trayecto ${sun?'☀️':'⛅'}`;
+            texto += `Siéntate en el lado ${leftSeat?"izquierdo":"derecho"} del vehículo durante todo el trayecto `;
         };
+            texto+=`${sun?'☀️':'⛅'}`;
+
         let div = document.createElement("div");
         div.setAttribute('id', `${i%2==0?'light':'dark'}`);
         div.setAttribute('class', 'card');
@@ -296,19 +315,25 @@ function sectionAdapter() {
 
         cosa[indices[j]] = {
             sunrise: sunrise,
+            sunriseCoords: sunrise!=null? subSection[indices[j]]["sunriseCoords"]: null,
+            sunriseOffset: sunrise!=null? subSection[indices[j]]["sunriseOffset"]: null,
             sunset: sunset,
+            sunsetCoords:  sunset!=null ? subSection[indices[j]]["sunsetCoords"] : null,
+            sunsetOffset:  sunset!=null ? subSection[indices[j]]["sunsetOffset"] : null,
             noon: noon,
+            noonCoords: subSection[indices[j]]["noonCoords"],
+            noonOffset: subSection[indices[j]]["noonOffset"],
+            /* Datos adicionales: */
             night: night,
             AM: AM
         };
         subSection[indices[j]] = cosa[indices[j]];
-        if (subSection.length==1) {break;}; /**optimizacion residual*/
     };
 };
 
 /** Formatea las secciones para que sean entidades separadas, cada una con su
  *  amanecer, ocaso y mediodía solar    */
-function sectionFormatter() {
+async function sectionFormatter() {
     try {
         let { start, end } = datos;
         let formatted = [{}];
@@ -319,9 +344,7 @@ function sectionFormatter() {
             if (e["date"].getTime() > f["date"].getTime()) {
                 return 1;
             } else {
-                return -1;
-            };
-        });
+                return -1;};});
         //eliminamos o actualizamos la primera y la última posición, 
         //según sea de día o no en la segunda y la penúltima posición
         //RECUERDA: debe empezar por 'sunrise'. Debe acabar por 'sunset'
@@ -333,9 +356,11 @@ function sectionFormatter() {
                 (j > 0) ? subSection.pop() : subSection.shift();
             } else {
                 subSection[j > 0 ? indices[j]+1 : 0] = {
+                    event: eventos[j],
                     date: propiedades[j][eventos[j]],
+                    coords: getNewCoords(datos["start"], datos["end"], (j>0?1:0)),
+                    offset: await getOffset(j>0?datos["start"]:datos["end"]),
                     rate: j > 0 ? 1 : 0,
-                    event: eventos[j]
                 };
             };
         };
@@ -345,14 +370,27 @@ function sectionFormatter() {
         };
         //formateamos - PASO FINAL
         for (let i = 0; i < subSection.length; i += 2) {
-            let noon, sunrise, sunset;
+            let noon, sunrise, sunset, sunriseCoords, sunsetCoords, noonCoords, sunriseOffset, sunsetOffset, noonOffset;
             sunrise = subSection[i]["date"];
             sunset = subSection[i + 1]["date"];
             noon = new Date(Math.floor((sunset.getTime() - sunrise.getTime()) / 2) + sunrise.getTime());
+            sunriseCoords = subSection[i]["coords"];
+            sunsetCoords =  subSection[i + 1]["coords"];
+            noonCoords = {lat: (((sunsetCoords.lat - sunriseCoords.lat) / 2) + sunriseCoords.lat),
+                        lon: (((sunsetCoords.lon - sunriseCoords.lon) / 2) + sunriseCoords.lon)};
+            sunriseOffset = subSection[i]["offset"];
+            sunsetOffset = subSection[i + 1]["offset"];
+            noonOffset = await getOffset(noonCoords);
             formatted[i / 2] = {
                 sunrise: sunrise,
+                sunriseCoords: sunriseCoords,
+                sunriseOffset: sunriseOffset,
                 sunset: sunset,
-                noon: noon
+                sunsetCoords: sunsetCoords,
+                sunsetOffset: sunsetOffset,
+                noon: noon,
+                noonCoords: noonCoords,
+                noonOffset: noonOffset
             };
         };
         subSection = formatted;
@@ -365,7 +403,7 @@ function sectionFormatter() {
  * a lo largo del trayecto (se mueve tanto el vehículo como la tierra alrededor del sol),
  * y marca sus coordenadas, su hora, el tipo de evento (amanecer o anochecer) y la 
  * tasa de avance respecto al trayecto total.   */
-function updateSingleSections() {
+async function updateSingleSections() {
     let {start, diasalida, diallegada} = datos; 
     let datePointer = diasalida;
     let diff = ONE_HOUR;
@@ -381,7 +419,7 @@ function updateSingleSections() {
     /** Máxima cantidad de iteraciones en el bucle */
     let MAX_LOOPS = Math.pow(MAX_DIFF, Math.pow(limit, Math.E));
     subSection = [{}];
-    subSection.push({date: diasalida, rate:0});
+    subSection.push({date: diasalida, rate:0, timeZone: await getOffset(coordPoint)});
     /**Tasa de avance a lo largo del trayecto*/
     let RATE = 0;
     let iteraciones = 0;
@@ -419,6 +457,7 @@ function updateSingleSections() {
                 event: seekSunset? "sunset": "sunrise",
                 date: datePointer,
                 coords: coordPoint,
+                offset: await getOffset(coordPoint),
                 rate: RATE});
             diff = ONE_HOUR;
             cont++;
@@ -428,6 +467,7 @@ function updateSingleSections() {
     subSection.push({date: diallegada, rate: 1});
     console.log("se han necesitado "+iteraciones+" iteraciones para una "
                 +"precisión de +/- "+MAX_DIFF+" milisegundos en los cálculos");
+    console.log(subSection);
     //comprobamos que No haya salido una cosa muy loca:
     if (checkForDuplicates(subSection, 'date')) {
         throw new Error('Ha habido algún error con las fechas!');};};
@@ -463,8 +503,8 @@ function isThereDaylightNow(here, now) {
 /** Consigue las coordenadas de las ciudades y las devuelve en forma de objeto
  * @returns {Object} Objeto con las coordenadas recién obtenidas  */
 async function updateCoords() {
-    let coordenadas1 = await getCoords(datos.origen);
-    let coordenadas2 = await getCoords(datos.destino);
+    let coordenadas1 = await getCoords(datos.origen, datos.paisOrigen);
+    let coordenadas2 = await getCoords(datos.destino, datos.paisDestino);
     let coord = {
         latOrig: coordenadas1.lat,
         lonOrig: coordenadas1.lon,
@@ -477,14 +517,13 @@ async function updateCoords() {
 /** Conseguimos las coordenadas de las ciudades que le 
  * pasemos como parámetros. Para ello, usaremos la API de OpenStreetMap, que nos devuelve
  * las coordenadas de una ciudad a partir de su nombre. 
- * @param {String} city @param {String} country /país - (opcional)
+ * @param {String} city @param {String} country /país 
  * @return {JSON} JSON con los datos Lon(gitud) y Lat(itud)*/
 async function getCoords(city, country) {
-    try {
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${city}&format=json`);
+    try { 
+        const response = await fetch(`https://nominatim.openstreetmap.org/search.php?city=${city}&country=${country}&format=jsonv2`);
         let data = await response.json();
-        data = data.filter((el) => el.display_name.includes(country || "España") && el.type == "administrative");
-        if (data.length > 0) data = data[0]; 
+        if (data.length > 0) {data = data[0];};
         return {lon: parseFloat(data.lon), lat: parseFloat(data.lat)};
     } catch (error) {
         console.log(error);
@@ -511,6 +550,8 @@ function valor(id) {
             break;
         case "origen": 
         case "destino": 
+        case "paisOrigen": 
+        case "paisDestino": 
             valor = getVal(id).trim().replaceAll(" ", "%20").replaceAll("á", "a").replaceAll("é", "e").replaceAll("í", "i").replaceAll("ó", "o").replaceAll("ú", "u").replaceAll("ñ", "n").replaceAll("ü", "u").replaceAll("ç", "c").replaceAll("à", "a").replaceAll("è", "e").replaceAll("ì", "i").replaceAll("ò", "o").replaceAll("ù", "u").toLowerCase();
             break;
         default:
@@ -529,7 +570,7 @@ function onClick(elem, fun) {
     elem.addEventListener("click", (e) => {
         e.preventDefault();
         fun();})}
-//añade a cada elemento del array ID su elemento del DOM correspondiente
+/**Añade a cada elemento del array ID su elemento del DOM correspondiente*/
 function reloadId(IDES) {
     IDES.forEach((el) => (window[el] = getID(el) ? getID(el) : null));}
 /** Función que devuelve un elemento del DOM

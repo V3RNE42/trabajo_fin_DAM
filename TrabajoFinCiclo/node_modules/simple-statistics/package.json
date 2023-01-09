@@ -1,0 +1,59 @@
+{
+  "name": "simple-statistics",
+  "version": "2.5.0",
+  "description": "Simple Statistics",
+  "author": "Tom MacWright <tom@macwright.org> (http://macwright.org/)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/simple-statistics/simple-statistics.git"
+  },
+  "files": [
+    "bower.json",
+    "src",
+    "dist"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "are-we-flow-yet": "^1.0.0",
+    "browserify": "^14.1.0",
+    "bundle-collapser": "^1.0.0",
+    "cz-conventional-changelog": "^1.2.0",
+    "eslint": "^3.8.1",
+    "exorcist": "^0.4.0",
+    "flow-bin": "^0.39.0",
+    "jsdoctest": "1.7.0",
+    "mocha": "3.2.0",
+    "random-js": "^1.0.4",
+    "standard-changelog": "^0.0.1",
+    "tap": "^10.1.1",
+    "uglify-js": "^2.6.2"
+  },
+  "scripts": {
+    "test": "are-we-flow-yet src && flow check src && eslint index.js src/*.js test/*.js && tap --coverage test/*.js && npm run jsdoctest",
+    "test-sauce": "node scripts/browser_test.js",
+    "build": "npm run bundle && npm run minify",
+    "changelog": "standard-changelog -i CHANGELOG.md --overwrite",
+    "prepublish": "npm run build && ./scripts/update_readme.js",
+    "bundle": "mkdir -p dist && browserify -p bundle-collapser/plugin -s ss index.js --debug | exorcist dist/simple-statistics.js.map > dist/simple-statistics.js",
+    "minify": "uglifyjs dist/simple-statistics.js -c -m --in-source-map=dist/simple-statistics.js.map --source-map=dist/simple-statistics.min.js.map -o dist/simple-statistics.min.js",
+    "jsdoctest": "mocha --require jsdoctest index.js"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": "*"
+  },
+  "license": "ISC",
+  "keywords": [
+    "descriptive",
+    "linear",
+    "math",
+    "probability",
+    "regression",
+    "statistics"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
