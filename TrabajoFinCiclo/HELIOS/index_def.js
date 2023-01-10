@@ -116,7 +116,7 @@ async function updateSubsections() {
     let latitudOrigen = 0.0, longitudOrigen = 0.0, latitudDestino = 0.0, longitudDestino = 0.0;
     try {
         coordenadas = await updateCoords();
-        datos.NaS = (coordenadas.latDest < coordenadas.latOrig) ? true : false;
+        datos.NaS = coordenadas.latDest < coordenadas.latOrig ? true : false;
         if (coordenadas !== undefined && coordenadas !== null) {
             latitudOrigen   = coordenadas.latOrig;
             longitudOrigen  = coordenadas.lonOrig;
@@ -212,19 +212,19 @@ function renderResults() {
                 /* Es posible cambiar de asiento */
                 let sameTime = !(hours1==noonHour && minutes1==noonMin);
                 if (sameTime) {
-                    texto +=     `Siéntate en el lado ${getLeftSeat(false)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
+                    texto +=     `Siéntate en el lado ${getLeftSeat(true)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
                     `a ${noonHour+":"+noonMin}, y luego`;};
-                texto += `\t  ${sameTime?'s':'S'}iéntate al lado ${getLeftSeat(true)?"izquierdo":"derecho"} del vehículo `;
+                texto += `\t  ${sameTime?'s':'S'}iéntate al lado ${getLeftSeat(false)?"izquierdo":"derecho"} del vehículo `;
                 texto += sameTime
                     ? `de ${noonHour+":"+noonMin} a ${hours2+":"+minutes2} `
                     : `durante todo el trayecto  `;
             } else {
                 /* No es posible cambiar de asiento */
-                if        (el["sunrise"]!=null) {
+                if (el["sunrise"]!=null) {
                     let morning   = el["noon"].getTime()   - el["sunrise"].getTime(),
                         afternoon = el["sunset"].getTime() - el["noon"].getTime();
                     leftSeat = getLeftSeat(morning>=afternoon);
-                    texto += `Siéntate en el lado ${!leftSeat?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
+                    texto += `Siéntate en el lado ${leftSeat?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
                     `a ${hours2+":"+minutes2}  `;
                 } else if (el["sunrise"]==null) {
                     texto += `Siéntate en el lado ${getLeftSeat(false)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
@@ -239,7 +239,7 @@ function renderResults() {
             leftSeat = getLeftSeat(el["AM"]);
             texto += `Siéntate en el lado ${leftSeat?"izquierdo":"derecho"} del vehículo durante todo el trayecto `;
         };
-            texto+=`${sun?'☀️':'⛅'}`;
+            if (!night) texto+=`${sun?'☀️':'⛅'}`;
 
         let div = document.createElement("div");
         div.setAttribute('id', `${i%2==0?'light':'dark'}`);
