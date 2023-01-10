@@ -6,8 +6,6 @@ import sunCalc from "./SunCalc_function.js";
 let {getDayInfo} = sunCalc();
 //importo algunas funciones trigonometricas y matematicas que he creado aparte
 import { getNewCoords, getAbsoluteDiff } from "./trigo.js";
-/* LO DEJAMOS EN CUARENTENA DE MOMENTO. BUSCAMOS PARA HACERLO EN API
-    import timespace from "../node_modules/@mapbox/timespace/index.js"; */
 import { Spinner } from "./spinner.js";
 let { preventDefault } = window.Event.prototype;
 
@@ -118,7 +116,7 @@ async function updateSubsections() {
     let latitudOrigen = 0.0, longitudOrigen = 0.0, latitudDestino = 0.0, longitudDestino = 0.0;
     try {
         coordenadas = await updateCoords();
-        datos.NaS = (coordenadas.latDest > coordenadas.latOrig) ? true : false;
+        datos.NaS = (coordenadas.latDest < coordenadas.latOrig) ? true : false;
         if (coordenadas !== undefined && coordenadas !== null) {
             latitudOrigen   = coordenadas.latOrig;
             longitudOrigen  = coordenadas.lonOrig;
