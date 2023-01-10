@@ -6,8 +6,6 @@ import sunCalc from "./SunCalc_function.js";
 let {getDayInfo} = sunCalc();
 //importo algunas funciones trigonometricas y matematicas que he creado aparte
 import { getNewCoords, getAbsoluteDiff } from "./trigo.js";
-/* LO DEJAMOS EN CUARENTENA DE MOMENTO. BUSCAMOS PARA HACERLO EN API
-    import timespace from "../node_modules/@mapbox/timespace/index.js"; */
 import { Spinner } from "./spinner.js";
 let { preventDefault } = window.Event.prototype;
 
