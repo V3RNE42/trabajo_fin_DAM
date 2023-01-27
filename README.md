@@ -1,6 +1,6 @@
 ## *SPANISH*    
 # HELIOS
-(Mi Trabajo de Fin de Ciclo para mi FP de DAM en el curso 2022-23. Empecé con él en Noviembre)
+(Mi Trabajo de Fin de Ciclo para mi FP de Desarrollo de Aplicaciones en el curso 2022-23. )
 
 **HELIOS** es una app online útil para elegir asientos en un trayecto: en el lado izquierdo del vehículo, o en el derecho. 
 Ya está. 
