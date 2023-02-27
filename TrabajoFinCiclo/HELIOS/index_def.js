@@ -55,7 +55,8 @@ let subSection = [{}];
 let datos   = [{}];
 
 window.addEventListener('load', ()=> {
-    if (navigator.geolocation) {
+    try {
+        if (navigator.geolocation) {
         let here;
         function savePosition(position) {
             here = {lat: position.coords.latitude, lon: position.coords.longitude};};
@@ -69,9 +70,11 @@ window.addEventListener('load', ()=> {
                     document.style.backgroundColor='black';};
             } else {
                 console.log(reject);};});
-    } else {
-        console.log("Tu navegador no permite geolocalizarte (^8");}
-    main();});
+        } else {
+            console.log("Tu navegador no permite geolocalizarte (^8");}
+    } finally {
+        main();
+    };});
 
 function main() {
     reloadId(ID);
@@ -339,14 +342,7 @@ async function sectionFormatter() {
         //Eliminamos elementos sobrantes
         while (!subSection[0].date) subSection.shift();
         //ordenamos
-        subSection.sort((e, f) => {return e["date"].getTime() > f["date"].getTime() ? 1 : -1}
-        /* {
-            if (e["date"].getTime() > f["date"].getTime()) {
-                return 1;
-            } else {
-                return -1;};
-            } */
-            );
+        subSection.sort((e, f) => {return e["date"].getTime() > f["date"].getTime() ? 1 : -1});
         //eliminamos o actualizamos la primera y la última posición, 
         //según sea de día o no en la segunda y la penúltima posición
         //RECUERDA: debe empezar por 'sunrise'. Debe acabar por 'sunset'
@@ -412,7 +408,7 @@ async function updateSingleSections() {
     let {start, diasalida, diallegada} = datos; 
     let datePointer = diasalida;
     let diff = ONE_HOUR;
-    let time =new Date(new Date().getTime()-ONE_DAY), tiempo = new Date();
+    let time = new Date(new Date().getTime()-ONE_DAY), tiempo = new Date();
     let total_time = diallegada.getTime()-diasalida.getTime();
     let limit = (Math.floor(total_time*2/ONE_DAY)>=1)?Math.floor(total_time*2/ONE_DAY):1;
     /** Máxima diferencia aceptable (milisegundos) */
@@ -485,16 +481,14 @@ async function updateSingleSections() {
 function checkForDuplicates(array, property) {
     if (array.length > 1) {
         if (array.some(el => el[property])) {
-            let duplicates = false;
             for (let i = 0; i < array.length; i++) {
                 for (let j = 0; j < array.length; j++) {
                     if (array[i][property] == array[j][property]
                         && i != j) {
-                        duplicates = true;};};};
-            return duplicates;
+                        return true;};};};
+            return false;
         } else {
-            console.log("Propiedad no encontrada en ningún elemento del array");};}
-    return false;};
+            console.log("Propiedad no encontrada en ningún elemento del array");};};};
 
 /** Nos dice si es de día en un momento dado, en un lugar dado
  *  @param {Object} here coordenadas actuales
