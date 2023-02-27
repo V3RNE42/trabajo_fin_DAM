@@ -177,6 +177,17 @@ function renderResults() {
                      <b>Destino:</b> ${datos["destino"]}, ${datos["paisDestino"]} <br>`;
     document.querySelector('header').appendChild(someInfo);
 
+    /** Analiza la propiedad AnteMeridiana y devuelve
+     *  izquierda (true), o derecha (false)
+     *  @param {Boolean} ams 
+     *  @returns {Boolean} True-Izquierda | False-Derecha*/
+    let getLeftSeat  = (ams, NaS) =>{
+        let leftSeat =  true;
+        if (!ams         ) {leftSeat=!leftSeat;};
+        if (!datos["sun"]) {leftSeat=!leftSeat;};
+        if (!NaS) {leftSeat=!leftSeat;};
+        return leftSeat;};
+
     secciones.forEach((el, i) => {
         let hours2, minutes2, noonHour, noonMin, hours1, minutes1, day, month, year;
         /* Ajuste a los husos horarios locales */
@@ -212,9 +223,9 @@ function renderResults() {
                 /* Es posible cambiar de asiento */
                 let sameTime = !(hours1==noonHour && minutes1==noonMin);
                 if (sameTime) {
-                    texto +=     `Siéntate en el lado ${getLeftSeat(true)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
+                    texto +=     `Siéntate en el lado ${getLeftSeat(true, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
                     `a ${noonHour+":"+noonMin}, y luego`;};
-                texto += `\t  ${sameTime?'s':'S'}iéntate al lado ${getLeftSeat(false)?"izquierdo":"derecho"} del vehículo `;
+                texto += `\t  ${sameTime?'s':'S'}iéntate al lado ${getLeftSeat(false, secciones.NaS)?"izquierdo":"derecho"} del vehículo `;
                 texto += sameTime
                     ? `de ${noonHour+":"+noonMin} a ${hours2+":"+minutes2} `
                     : `durante todo el trayecto  `;
@@ -223,20 +234,20 @@ function renderResults() {
                 if (el["sunrise"]!=null) {
                     let morning   = el["noon"].getTime()   - el["sunrise"].getTime(),
                         afternoon = el["sunset"].getTime() - el["noon"].getTime();
-                    leftSeat = getLeftSeat(morning>=afternoon);
+                    leftSeat = getLeftSeat(morning>=afternoon, secciones.NaS);
                     texto += `Siéntate en el lado ${leftSeat?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
                     `a ${hours2+":"+minutes2}  `;
                 } else if (el["sunrise"]==null) {
-                    texto += `Siéntate en el lado ${getLeftSeat(false)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
+                    texto += `Siéntate en el lado ${getLeftSeat(false, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
                     `a ${hours2+":"+minutes2}  `;
                 } else if (el["sunset"]==null ) {
-                    texto += `Siéntate en el lado ${getLeftSeat(true)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
+                    texto += `Siéntate en el lado ${getLeftSeat(true, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
                     `a ${hours2+":"+minutes2} `;
                 };
             };
         } else {
             /* No es necesario cambiarse: todo el trayecto courre ANTES o DESPUÉS del Mediodia Solar */
-            leftSeat = getLeftSeat(el["AM"]);
+            leftSeat = getLeftSeat(el["AM"], secciones.NaS);
             texto += `Siéntate en el lado ${leftSeat?"izquierdo":"derecho"} del vehículo durante todo el trayecto `;
         };
             if (!night) texto+=`${sun?'☀️':'⛅'}`;
@@ -257,16 +268,7 @@ function renderResults() {
     reloadId(ID);
     onClick(resetea, () => {window.location.reload();});
 };
-/** Analiza la propiedad AnteMeridiana y devuelve
- *  izquierda (true), o derecha (false)
- *  @param {Boolean} ams 
- *  @returns {Boolean} True-Izquierda | False-Derecha*/
-function getLeftSeat(ams){
-    let leftSeat =  true;
-    if (!ams         ) {leftSeat=!leftSeat;};
-    if (!datos["sun"]) {leftSeat=!leftSeat;};
-    if (!datos["NaS"]) {leftSeat=!leftSeat;};
-    return leftSeat;};
+
 
 /** Adapta las secciones para facilitar su posterior interpretación 
  *  y renderización en pantalla  */
@@ -318,6 +320,7 @@ function sectionAdapter() {
             sunset: sunset,
             sunsetCoords:  sunset!=null ? subSection[indices[j]]["sunsetCoords"] : null,
             sunsetOffset:  sunset!=null ? subSection[indices[j]]["sunsetOffset"] : null,
+            NaS: subSection[indices[j]].NaS,
             noon: noon,
             noonCoords: subSection[indices[j]]["noonCoords"],
             noonOffset: subSection[indices[j]]["noonOffset"],
@@ -368,7 +371,7 @@ async function sectionFormatter() {
         };
         //formateamos - PASO FINAL
         for (let i = 0; i < subSection.length; i += 2) {
-            let noon, sunrise, sunset, sunriseCoords, sunsetCoords, noonCoords, sunriseOffset, sunsetOffset, noonOffset;
+            let noon, sunrise, sunset, sunriseCoords, sunsetCoords, noonCoords, sunriseOffset, sunsetOffset, noonOffset, NaS;
             sunrise = subSection[i]["date"];
             sunset = subSection[i + 1]["date"];
             noon = new Date(Math.floor((sunset.getTime() - sunrise.getTime()) / 2) + sunrise.getTime());
@@ -379,6 +382,7 @@ async function sectionFormatter() {
             sunriseOffset = subSection[i]["offset"];
             sunsetOffset = subSection[i + 1]["offset"];
             noonOffset = await getOffset(noonCoords);
+            NaS = subSection[i]["coords"].lat > subSection[i + 1]["coords"].lat;
             formatted[i / 2] = {
                 sunrise: sunrise,
                 sunriseCoords: sunriseCoords,
@@ -388,7 +392,8 @@ async function sectionFormatter() {
                 sunsetOffset: sunsetOffset,
                 noon: noon,
                 noonCoords: noonCoords,
-                noonOffset: noonOffset
+                noonOffset: noonOffset,
+                NaS: NaS
             };
         };
         subSection = formatted;
