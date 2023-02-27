@@ -208,7 +208,7 @@ function renderResults() {
             month    = el.noon?.getMonth(),
             year     = el.noon?.getFullYear();
 
-        let numToString = (num) => num>=9 ? num.toString() : "0"+num.toString();
+        let adapt = (num) => num>=9 ? num.toString() : "0"+num.toString();
 
         let texto = ``;
         if (secciones.length>1) {   
@@ -221,11 +221,11 @@ function renderResults() {
                 /* Es posible cambiar de asiento */
                 let sameTime = !(hours1==noonHour && minutes1==noonMin);
                 if (sameTime) {
-                    texto +=     `Siéntate en el lado ${getLeftSeat(true, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${numToString(hours1)+":"+numToString(minutes1)} `+
-                    `a ${noonHour+":"+noonMin}, y luego`;};
+                    texto +=     `Siéntate en el lado ${getLeftSeat(true, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${adapt(hours1)+":"+adapt(minutes1)} `+
+                    `a ${adapt(noonHour)+":"+adapt(noonMin)}, y luego`;};
                 texto += `\t  ${sameTime?'s':'S'}iéntate al lado ${getLeftSeat(false, secciones.NaS)?"izquierdo":"derecho"} del vehículo `;
                 texto += sameTime
-                    ? `de ${numToString(noonHour)+":"+numToString(noonMin)} a ${numToString(hours2)+":"+numToString(minutes2)} `
+                    ? `de ${adapt(noonHour)+":"+adapt(noonMin)} a ${adapt(hours2)+":"+adapt(minutes2)} `
                     : `durante todo el trayecto  `;
             } else {
                 /* No es posible cambiar de asiento */
@@ -233,14 +233,14 @@ function renderResults() {
                     let morning   = el["noon"].getTime()   - el["sunrise"].getTime(),
                         afternoon = el["sunset"].getTime() - el["noon"].getTime();
                     leftSeat = getLeftSeat(morning>=afternoon, secciones.NaS);
-                    texto += `Siéntate en el lado ${leftSeat?"izquierdo":"derecho"} del vehículo de ${numToString(hours1)+":"+numToString(minutes1)} `+
-                    `a ${numToString(hours2)+":"+numToString(minutes2)}  `;
+                    texto += `Siéntate en el lado ${leftSeat?"izquierdo":"derecho"} del vehículo de ${adapt(hours1)+":"+adapt(minutes1)} `+
+                    `a ${adapt(hours2)+":"+adapt(minutes2)}  `;
                 } else if (el["sunrise"]==null) {
-                    texto += `Siéntate en el lado ${getLeftSeat(false, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${numToString(hours1)+":"+numToString(minutes1)} `+
-                    `a ${numToString(hours2)+":"+numToString(minutes2)}  `;
+                    texto += `Siéntate en el lado ${getLeftSeat(false, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${adapt(hours1)+":"+adapt(minutes1)} `+
+                    `a ${adapt(hours2)+":"+adapt(minutes2)}  `;
                 } else if (el["sunset"]==null ) {
-                    texto += `Siéntate en el lado ${getLeftSeat(true, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${numToString(hours1)+":"+numToString(minutes1)} `+
-                    `a ${numToString(hours2)+":"+numToString(minutes2)} `;
+                    texto += `Siéntate en el lado ${getLeftSeat(true, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${adapt(hours1)+":"+adapt(minutes1)} `+
+                    `a ${adapt(hours2)+":"+adapt(minutes2)} `;
                 };
             };
         } else {
