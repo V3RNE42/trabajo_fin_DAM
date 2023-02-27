@@ -339,11 +339,14 @@ async function sectionFormatter() {
         //Eliminamos elementos sobrantes
         while (!subSection[0].date) subSection.shift();
         //ordenamos
-        subSection.sort((e, f) => {
+        subSection.sort((e, f) => {return e["date"].getTime() > f["date"].getTime() ? 1 : -1}
+        /* {
             if (e["date"].getTime() > f["date"].getTime()) {
                 return 1;
             } else {
-                return -1;};});
+                return -1;};
+            } */
+            );
         //eliminamos o actualizamos la primera y la última posición, 
         //según sea de día o no en la segunda y la penúltima posición
         //RECUERDA: debe empezar por 'sunrise'. Debe acabar por 'sunset'
