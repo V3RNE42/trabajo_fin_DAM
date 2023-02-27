@@ -192,7 +192,7 @@ function renderResults() {
         let hours2, minutes2, noonHour, noonMin, hours1, minutes1, day, month, year;
         /* Ajuste a los husos horarios locales */
         if (!local) {
-            let originalOffset = secciones[0].sunriseOffset;
+            let originalOffset = secciones[i].sunriseOffset;
             el.sunset  = (el.sunset !=null)? new Date(el.sunset.getTime()  + (el.sunsetOffset.valueOf()  - originalOffset) * ONE_HOUR) : null;
             el.sunrise = (el.sunrise!=null)? new Date(el.sunrise.getTime() + (el.sunriseOffset.valueOf() - originalOffset) * ONE_HOUR) : null;
             el.noon    = (el.noon   !=null)? new Date(el.noon.getTime()    + (el.noonOffset.valueOf()    - originalOffset) * ONE_HOUR) : null;
@@ -208,10 +208,8 @@ function renderResults() {
             month    = el.noon?.getMonth(),
             year     = el.noon?.getFullYear();
 
-        let hours = [hours2, noonHour, hours1];
-        let numbers = [...hours, minutes2, noonMin, minutes1];
-        function stringifyNumbers () {numbers.forEach((el) => el= (el<=9) ? "0"+el : ""+el);};
-        stringifyNumbers();
+        let numToString = (num) => num>=9 ? num.toString() : "0"+num.toString();
+
         let texto = ``;
         if (secciones.length>1) {   
             texto = `Dia ${day+"/"+(month+1)+"/"+year}: \n\t Tramo (${i+1}/${secciones.length}) - <br>`;};
@@ -223,11 +221,11 @@ function renderResults() {
                 /* Es posible cambiar de asiento */
                 let sameTime = !(hours1==noonHour && minutes1==noonMin);
                 if (sameTime) {
-                    texto +=     `Siéntate en el lado ${getLeftSeat(true, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
+                    texto +=     `Siéntate en el lado ${getLeftSeat(true, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${numToString(hours1)+":"+numToString(minutes1)} `+
                     `a ${noonHour+":"+noonMin}, y luego`;};
                 texto += `\t  ${sameTime?'s':'S'}iéntate al lado ${getLeftSeat(false, secciones.NaS)?"izquierdo":"derecho"} del vehículo `;
                 texto += sameTime
-                    ? `de ${noonHour+":"+noonMin} a ${hours2+":"+minutes2} `
+                    ? `de ${numToString(noonHour)+":"+numToString(noonMin)} a ${numToString(hours2)+":"+numToString(minutes2)} `
                     : `durante todo el trayecto  `;
             } else {
                 /* No es posible cambiar de asiento */
@@ -235,14 +233,14 @@ function renderResults() {
                     let morning   = el["noon"].getTime()   - el["sunrise"].getTime(),
                         afternoon = el["sunset"].getTime() - el["noon"].getTime();
                     leftSeat = getLeftSeat(morning>=afternoon, secciones.NaS);
-                    texto += `Siéntate en el lado ${leftSeat?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
-                    `a ${hours2+":"+minutes2}  `;
+                    texto += `Siéntate en el lado ${leftSeat?"izquierdo":"derecho"} del vehículo de ${numToString(hours1)+":"+numToString(minutes1)} `+
+                    `a ${numToString(hours2)+":"+numToString(minutes2)}  `;
                 } else if (el["sunrise"]==null) {
-                    texto += `Siéntate en el lado ${getLeftSeat(false, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
-                    `a ${hours2+":"+minutes2}  `;
+                    texto += `Siéntate en el lado ${getLeftSeat(false, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${numToString(hours1)+":"+numToString(minutes1)} `+
+                    `a ${numToString(hours2)+":"+numToString(minutes2)}  `;
                 } else if (el["sunset"]==null ) {
-                    texto += `Siéntate en el lado ${getLeftSeat(true, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${hours1+":"+minutes1} `+
-                    `a ${hours2+":"+minutes2} `;
+                    texto += `Siéntate en el lado ${getLeftSeat(true, secciones.NaS)?"izquierdo":"derecho"} del vehículo de ${numToString(hours1)+":"+numToString(minutes1)} `+
+                    `a ${numToString(hours2)+":"+numToString(minutes2)} `;
                 };
             };
         } else {
@@ -250,7 +248,7 @@ function renderResults() {
             leftSeat = getLeftSeat(el["AM"], secciones.NaS);
             texto += `Siéntate en el lado ${leftSeat?"izquierdo":"derecho"} del vehículo durante todo el trayecto `;
         };
-            if (!night) texto+=`${sun?'☀️':'⛅'}`;
+            if (!el.night) texto+=`${sun?'☀️':'⛅'}`;
 
         let div = document.createElement("div");
         div.setAttribute('id', `${i%2==0?'light':'dark'}`);
@@ -393,7 +391,8 @@ async function sectionFormatter() {
                 noon: noon,
                 noonCoords: noonCoords,
                 noonOffset: noonOffset,
-                NaS: NaS
+                NaS: NaS,
+                night: false
             };
         };
         subSection = formatted;
