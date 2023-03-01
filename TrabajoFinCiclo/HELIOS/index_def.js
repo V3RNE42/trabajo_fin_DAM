@@ -1,13 +1,13 @@
 import {SunCalc} from "../node_modules/suncalc/suncalc.js"
-//con la funcion getTimes sacamos el MediodiaSolar
-let {getTimes}   = SunCalc;
 import sunCalc from "./SunCalc_function.js";
-//con la funcion getDayInfo sacamos el amanaecer y el anochecer (entre otros datos)
-let {getDayInfo} = sunCalc();
 //importo algunas funciones trigonometricas y matematicas que he creado aparte
 import { getNewCoords, getAbsoluteDiff } from "./trigo.js";
 import { Spinner } from "./spinner.js";
+//con la funcion getTimes sacamos el MediodiaSolar
+let {getTimes}   = SunCalc;
+//con la funcion getDayInfo sacamos el amanaecer y el anochecer (entre otros datos)
 let { preventDefault } = window.Event.prototype;
+let {getDayInfo} = sunCalc();
 
 /** Ajuste de las horas en las fechas por defecto: 
 suelen empezar a las 10:42 por algun motivo*/
@@ -54,27 +54,7 @@ let subSection = [{}];
 /** Array de información principal con la que trabajar */
 let datos   = [{}];
 
-window.addEventListener('load', ()=> {
-    try {
-        if (navigator.geolocation) {
-        let here;
-        function savePosition(position) {
-            here = {lat: position.coords.latitude, lon: position.coords.longitude};};
-        let now = new Date();
-        navigator.geolocation.getCurrentPosition((resolve, reject) => {
-            if (resolve) {
-                savePosition(resolve);
-                if (isThereDaylightNow(here, now)) {
-                    document.style.backgroundColor='white';
-                } else {
-                    document.style.backgroundColor='black';};
-            } else {
-                console.log(reject);};});
-        } else {
-            console.log("Tu navegador no permite geolocalizarte (^8");}
-    } finally {
-        main();
-    };});
+window.addEventListener('load', main());
 
 function main() {
     reloadId(ID);
